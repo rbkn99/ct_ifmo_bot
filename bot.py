@@ -1,5 +1,6 @@
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
+from telegram.ext import MessageHandler, Filters
 import os
 import strings
 import page_parser as pp
@@ -83,6 +84,7 @@ dispatcher.add_handler(CommandHandler('help', hello))
 dispatcher.add_handler(CommandHandler('stats', send_stats))
 dispatcher.add_handler(CommandHandler('search', search))
 dispatcher.add_handler(CommandHandler('faq', send_faq))
+dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
 
 updater.start_webhook(listen="0.0.0.0",
                       port=int(os.environ.get('PORT', '5000')),
