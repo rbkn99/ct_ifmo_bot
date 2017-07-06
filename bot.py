@@ -30,7 +30,7 @@ def send_stats(bot, update):
                  "%s1: {4}\n" \
                  "%s2: {5}\n" \
                  "%s3: {6}\n\n".format(*stat) % (tab4, tab4, tab4, tab8, tab8, tab8)
-        bot.send_message(chat_id=update.message.chat_id, text=stats)
+    bot.send_message(chat_id=update.message.chat_id, text=stats)
 
 
 def search(bot, update):
@@ -75,7 +75,7 @@ def handle_message(bot, update):
                        "Преимущественное право: {12}\n" \
                        "Олимпиада: {13}\n" \
                        "Статус: {14}\n\n".format(*abit) % (tab4, tab4, tab4, tab4, tab4, tab4, tab4)
-        bot.send_message(chat_id=update.message.chat_id, text=result_text)
+    bot.send_message(chat_id=update.message.chat_id, text=result_text)
 
 
 dispatcher.add_handler(CommandHandler('start', hello))
