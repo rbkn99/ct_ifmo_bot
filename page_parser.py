@@ -7,7 +7,7 @@ import config as cfg
 
 def get_current_stats():
     html = requests.get(cfg.STATS_URL).text
-    soup = BeautifulSoup(html, "lxml")
+    soup = BeautifulSoup(html)
     rows = soup.find_all('tr')
     ami_rows = list(filter(lambda row: strings.ami in str(row), rows))
     data = []
