@@ -2,6 +2,8 @@ import telebot
 import strings
 import config as cfg
 
+print(telebot.__version__)
+
 bot = telebot.TeleBot(cfg.TOKEN)
 
 
