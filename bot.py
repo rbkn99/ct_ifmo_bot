@@ -47,7 +47,6 @@ def send_faq(bot, update):
 def handle_message(bot, update):
     global wait_for_abit_mode
     if not wait_for_abit_mode:
-        bot.send_message(chat_id=update.message.chat_id, text=strings.error_mes)
         return
 
     wait_for_abit_mode = False
