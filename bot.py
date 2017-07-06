@@ -1,7 +1,6 @@
 import telebot
 import strings
-import os
-import cherrypy
+from flask import Flask, request
 import page_parser as pp
 import config as cfg
 
@@ -81,33 +80,20 @@ def handle_message(message):
                        "Статус: {14}\n\n".format(*abit) % (tab4, tab4, tab4, tab4, tab4, tab4, tab4)
     bot.send_message(message.chat.id, result_text)
 
-
-class WebhookServer(object):
-    @cherrypy.expose
-    def index(self):
-        if 'content-length' in cherrypy.request.headers and \
-                        'content-type' in cherrypy.request.headers and \
-                        cherrypy.request.headers['content-type'] == 'application/json':
-            length = int(cherrypy.request.headers['content-length'])
-            json_string = cherrypy.request.body.read(length).decode("utf-8")
-            update = telebot.types.Update.de_json(json_string)
-            bot.process_new_updates([update])
-            return ''
-        else:
-            raise cherrypy.HTTPError(403)
+app = Flask(__name__)
+context = (cfg.SSL_CERT, cfg.SSL_PRIV)
 
 
-bot.remove_webhook()
+@app.route('/')
+def hello():
+    return 'Hello World!'
 
-bot.set_webhook(url=cfg.WEBHOOK_URL_BASE + cfg.WEBHOOK_URL_PATH,
-                certificate=open(cfg.WEBHOOK_SSL_CERT, 'r'))
 
-cherrypy.config.update({
-    'server.socket_host': cfg.WEBHOOK_LISTEN,
-    'server.socket_port': cfg.WEBHOOK_PORT,
-    'server.ssl_module': 'builtin',
-    'server.ssl_certificate': cfg.WEBHOOK_SSL_CERT,
-    'server.ssl_private_key': cfg.WEBHOOK_SSL_PRIV
-})
+if __name__ == '__main__':
+    bot.remove_webhook()
+    bot.set_webhook(url='https://%s:%s/%s' % (cfg.HOST, cfg.PORT, cfg.TOKEN), certificate=open(cfg.SSL_CERT, 'rb'))
 
-cherrypy.quickstart(WebhookServer(), cfg.WEBHOOK_URL_PATH, {'/': {}})
+    app.run(host='0.0.0.0',
+            port=cfg.PORT,
+            ssl_context=context,
+            debug=True)
