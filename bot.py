@@ -1,22 +1,20 @@
-import telebot
+from telegram.ext import Updater
+from telegram.ext import CommandHandler
 import strings
-import os
-from flask import Flask
 import page_parser as pp
 import config as cfg
 
-bot = telebot.TeleBot(cfg.TOKEN)
+updater = Updater(token=cfg.TOKEN)
+dispatcher = updater.dispatcher
 
 wait_for_abit_mode = False
 
 
-@bot.message_handler(commands=['start', 'help'])
-def send_hello_message(message):
-    bot.send_message(message.chat.id, strings.hello_mes)
+def hello(bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text=strings.hello_mes)
 
 
-@bot.message_handler(commands=['stats'])
-def send_stats(message):
+def send_stats(bot, update):
     raw_stats = pp.get_current_stats()
     stats = ""
     tab4 = "\t\t\t\t"
@@ -31,32 +29,29 @@ def send_stats(message):
                  "%s1: {4}\n" \
                  "%s2: {5}\n" \
                  "%s3: {6}\n\n".format(*stat) % (tab4, tab4, tab4, tab8, tab8, tab8)
-    bot.send_message(message.chat.id, stats)
+        bot.send_message(chat_id=update.message.chat_id, text=stats)
 
 
-@bot.message_handler(commands=['search'])
-def send_details(message):
-    bot.send_message(message.chat.id, strings.wait_abit_mes)
+def search(bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text=strings.wait_abit_mes)
     global wait_for_abit_mode
     wait_for_abit_mode = True
 
 
-@bot.message_handler(commands=['faq'])
-def send_faq(message):
-    bot.send_message(message.chat.id, strings.faq)
+def send_faq(bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text=strings.faq)
 
 
-@bot.message_handler(content_types=['text'])
-def handle_message(message):
+def handle_message(bot, update):
     global wait_for_abit_mode
     if not wait_for_abit_mode:
-        bot.send_message(message.chat.id, strings.error_mes)
+        bot.send_message(chat_id=update.message.chat_id, text=strings.error_mes)
         return
 
     wait_for_abit_mode = False
-    abits = pp.get_abit(message.text)
+    abits = pp.get_abit(update.message.text)
     if len(abits) == 0:
-        bot.send_message(message.chat.id, strings.not_found_mes)
+        bot.send_message(chat_id=update.message.chat_id, text=strings.not_found_mes)
         return
 
     tab4 = "\t\t\t\t"
@@ -79,19 +74,17 @@ def handle_message(message):
                        "Преимущественное право: {12}\n" \
                        "Олимпиада: {13}\n" \
                        "Статус: {14}\n\n".format(*abit) % (tab4, tab4, tab4, tab4, tab4, tab4, tab4)
-    bot.send_message(message.chat.id, result_text)
-
-app = Flask(__name__)
-context = (cfg.SSL_CERT, cfg.SSL_PRIV)
+        bot.send_message(chat_id=update.message.chat_id, text=result_text)
 
 
-@app.route('/')
-def hello():
-    return 'Hello World!'
+dispatcher.add_handler(CommandHandler('start', hello))
+dispatcher.add_handler(CommandHandler('help', hello))
+dispatcher.add_handler(CommandHandler('stats', send_stats))
+dispatcher.add_handler(CommandHandler('search', search))
+dispatcher.add_handler(CommandHandler('faq', send_faq))
 
-
-if __name__ == '__main__':
-    bot.remove_webhook()
-    bot.set_webhook(url=cfg.HOST, certificate=open(cfg.SSL_CERT, 'rb'))
-
-    app.run(host="0.0.0.0", port=cfg.PORT)
+updater.start_webhook(listen="0.0.0.0",
+                      port=cfg.PORT,
+                      url_path=cfg.TOKEN)
+updater.bot.set_webhook(cfg.HOST + cfg.TOKEN)
+updater.idle()
