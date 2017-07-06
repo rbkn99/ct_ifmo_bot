@@ -1,6 +1,7 @@
 import telebot
 import strings
-from flask import Flask, request
+import os
+from flask import Flask
 import page_parser as pp
 import config as cfg
 
@@ -93,7 +94,4 @@ if __name__ == '__main__':
     bot.remove_webhook()
     bot.set_webhook(url=cfg.HOST, certificate=open(cfg.SSL_CERT, 'rb'))
 
-    app.run(host='0.0.0.0',
-            port=cfg.PORT,
-            ssl_context=context,
-            debug=True)
+    app.run(host="0.0.0.0", port=os.environ.get('PORT', 5000))
