@@ -5,7 +5,6 @@ ABIT_LIST_URL = "https://abit.ifmo.ru/bachelor/rating_rank/all/60/"
 
 HOST = 'https://ctifmobot.herokuapp.com/'
 PORT = 8443
-LISTEN = '0.0.0.0'
 
 SSL_CERT = './cert.pem'
 SSL_PRIV = './private.key'

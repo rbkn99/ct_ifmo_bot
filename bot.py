@@ -1,5 +1,6 @@
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
+import os
 import strings
 import page_parser as pp
 import config as cfg
@@ -84,7 +85,7 @@ dispatcher.add_handler(CommandHandler('search', search))
 dispatcher.add_handler(CommandHandler('faq', send_faq))
 
 updater.start_webhook(listen="0.0.0.0",
-                      port=cfg.PORT,
+                      port=int(os.environ.get('PORT', '5000')),
                       url_path=cfg.TOKEN)
 updater.bot.set_webhook(cfg.HOST + cfg.TOKEN)
 updater.idle()
