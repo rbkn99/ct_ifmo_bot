@@ -19,7 +19,6 @@ def get_current_stats():
 
 
 def search_abit(name, abits_list):
-    name = name.split(' ')
     name_parts = list(itertools.permutations(name))
     result = []
     for part in name_parts:

@@ -9,8 +9,6 @@ import config as cfg
 updater = Updater(token=cfg.TOKEN)
 dispatcher = updater.dispatcher
 
-wait_for_abit_mode = False
-
 
 def hello(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text=strings.hello_mes)
@@ -34,23 +32,14 @@ def send_stats(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text=stats)
 
 
-def search(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text=strings.wait_abit_mes)
-    global wait_for_abit_mode
-    wait_for_abit_mode = True
-
-
 def send_faq(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text=strings.faq)
 
 
-def handle_message(bot, update):
-    global wait_for_abit_mode
-    if not wait_for_abit_mode:
-        return
-
-    wait_for_abit_mode = False
-    abits = pp.get_abit(update.message.text)
+def search(bot, update, args):
+    if len(args) == 0:
+        bot.send_message(chat_id=update.message.chat_id, text=strings.tip_mes)
+    abits = pp.get_abit(args)
     if len(abits) == 0:
         bot.send_message(chat_id=update.message.chat_id, text=strings.not_found_mes)
         return
@@ -81,9 +70,8 @@ def handle_message(bot, update):
 dispatcher.add_handler(CommandHandler('start', hello))
 dispatcher.add_handler(CommandHandler('help', hello))
 dispatcher.add_handler(CommandHandler('stats', send_stats))
-dispatcher.add_handler(CommandHandler('search', search))
+dispatcher.add_handler(CommandHandler('search', search, pass_args=True))
 dispatcher.add_handler(CommandHandler('faq', send_faq))
-dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
 
 updater.start_webhook(listen="0.0.0.0",
                       port=int(os.environ.get('PORT', '5000')),
