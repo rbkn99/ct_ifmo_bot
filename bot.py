@@ -45,7 +45,7 @@ def search(bot, update, args):
         return
 
     tab4 = "\t\t\t\t"
-    result_text = ""
+    result_text = cfg.ABIT_LIST_URL + '\n'
     for abit in abits:
         abit = ['-' if el == '' else el for el in abit]
         result_text += "№ п/п: {0}\n" \
