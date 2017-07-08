@@ -21,7 +21,10 @@ links_mes = "Подробности о кафедре — http://codeforces.com/
             "https://t.me/joinchat/AAAAAEM_TwDXkGr4DiXyLg\n" \
             "Канал для важных вопросов и объявлений — https://telegram.me/ct_2017\n" \
             "FAQ для абитуриентов — https://vk.com/away.php?to=http%3A%2F%2Fct.ifmo.ru%" \
-            "2Fru%2Fpage%2F17003%2FFAQ_dlya_abiturientov.htm&post=-131616069_178&cc_key=\n"
+            "2Fru%2Fpage%2F17003%2FFAQ_dlya_abiturientov.htm&post=-131616069_178&cc_key=\n" \
+            "http://neerc.ifmo.ru/wiki/index.php?title=%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%" \
+            "D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0 - викиконспекты\n" \
+            "https://vk.com/ktmemes - мЕмЫ"
 
 faq = "Если количество олимпиадников будет больше, чем количество бюджетных мест?\n" \
       "Среди олимпиадников конкурс не проводится. Будут зачислены на бюджет все абитуриенты, " \
