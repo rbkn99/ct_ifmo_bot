@@ -16,7 +16,7 @@ def hello(bot, update):
 
 def send_stats(bot, update):
     raw_stats = pp.get_current_stats()
-    stats = ""
+    stats = cfg.ABIT_LIST_URL + '\n'
     tab4 = "\t\t\t\t"
     tab8 = tab4 * 2
     for stat in raw_stats:
@@ -38,14 +38,14 @@ def send_faq(bot, update):
 
 def search(bot, update, args):
     if len(args) == 0:
-        bot.send_message(chat_id=update.message.chat_id, text=strings.tip_mes)
+        bot.send_message(chat_id=update.message.chat_id, text=strings.tip_mes, quote=True)
     abits = pp.get_abit(args)
     if len(abits) == 0:
-        bot.send_message(chat_id=update.message.chat_id, text=strings.not_found_mes)
+        bot.send_message(chat_id=update.message.chat_id, text=strings.not_found_mes, quote=True)
         return
 
     tab4 = "\t\t\t\t"
-    result_text = cfg.ABIT_LIST_URL + '\n'
+    result_text = ""
     for abit in abits:
         abit = ['-' if el == '' else el for el in abit]
         result_text += "№ п/п: {0}\n" \
@@ -64,7 +64,7 @@ def search(bot, update, args):
                        "Преимущественное право: {12}\n" \
                        "Олимпиада: {13}\n" \
                        "Статус: {14}\n\n".format(*abit) % (tab4, tab4, tab4, tab4, tab4, tab4, tab4)
-    bot.send_message(chat_id=update.message.chat_id, text=result_text)
+    bot.send_message(chat_id=update.message.chat_id, text=result_text, quote=True)
 
 
 dispatcher.add_handler(CommandHandler('start', hello))
