@@ -38,3 +38,7 @@ def get_abit(name):
     rows = [row[1:] if len(row) == 16 else row for row in rows]
 
     return search_abit(name, rows)
+
+
+def get_new_abits():
+    pass
