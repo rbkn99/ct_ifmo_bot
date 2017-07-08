@@ -67,10 +67,14 @@ def search(bot, update, args):
     update.message.reply_text(result_text)
 
 
+def links(bot, update):
+    update.message.reply_text(strings.links_mes)
+
 dispatcher.add_handler(CommandHandler('start', hello))
 dispatcher.add_handler(CommandHandler('help', hello))
 dispatcher.add_handler(CommandHandler('stats', send_stats))
 dispatcher.add_handler(CommandHandler('search', search, pass_args=True))
+dispatcher.add_handler(CommandHandler('links', links))
 dispatcher.add_handler(CommandHandler('faq', send_faq))
 
 updater.start_webhook(listen="0.0.0.0",
