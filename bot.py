@@ -11,7 +11,7 @@ dispatcher = updater.dispatcher
 
 
 def hello(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text=strings.hello_mes)
+    update.message.reply_text(strings.hello_mes)
 
 
 def send_stats(bot, update):
@@ -29,19 +29,19 @@ def send_stats(bot, update):
                  "%s1: {4}\n" \
                  "%s2: {5}\n" \
                  "%s3: {6}\n\n".format(*stat) % (tab4, tab4, tab4, tab8, tab8, tab8)
-    bot.send_message(chat_id=update.message.chat_id, text=stats)
+    update.message.reply_text(stats)
 
 
 def send_faq(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text=strings.faq)
+    update.message.reply_text(strings.faq)
 
 
 def search(bot, update, args):
     if len(args) == 0:
-        bot.send_message(chat_id=update.message.chat_id, text=strings.tip_mes, quote=True)
+        update.message.reply_text(strings.tip_mes)
     abits = pp.get_abit(args)
     if len(abits) == 0:
-        bot.send_message(chat_id=update.message.chat_id, text=strings.not_found_mes, quote=True)
+        update.message.reply_text(strings.not_found_mes)
         return
 
     tab4 = "\t\t\t\t"
