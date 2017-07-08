@@ -64,7 +64,7 @@ def search(bot, update, args):
                        "Преимущественное право: {12}\n" \
                        "Олимпиада: {13}\n" \
                        "Статус: {14}\n\n".format(*abit) % (tab4, tab4, tab4, tab4, tab4, tab4, tab4)
-    bot.send_message(chat_id=update.message.chat_id, text=result_text, quote=True)
+    update.message.reply_text(result_text)
 
 
 dispatcher.add_handler(CommandHandler('start', hello))
