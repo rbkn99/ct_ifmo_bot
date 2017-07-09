@@ -48,11 +48,16 @@ def get_abit(name):
 
 
 def get_new_abits():
+    print(100)
     abits = get_all_abits()
+    print(101)
     abits_names = get_abits_names()
+    print(102)
     db_abits_names = db.get_db_abits()
+    print(103)
     new_abits = []
     for abit in abits_names:
         if abit not in db_abits_names:
             new_abits.append(search_abit(abit, abits)[0])
+    print(104)
     return new_abits
