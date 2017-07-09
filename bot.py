@@ -80,7 +80,7 @@ def new(bot, update):
     new_abits = pp.get_new_abits()
     if len(new_abits) == 0:
         update.message.reply_text(strings.no_abits)
-    result_text = ""
+    result_text = "На сегодня {0} новых заявок на поступление\n".format(len(new_abits))
     for abit in new_abits:
         result_text += format_abit_info(abit)
     update.message.reply_text(result_text)
