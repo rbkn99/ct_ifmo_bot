@@ -23,7 +23,6 @@ def search_abit(name, abits_list):
     name_parts = list(itertools.permutations(name))
     result = []
     for part in name_parts:
-        print(' '.join(part).lower())
         result += list(filter(lambda x: ' '.join(part).lower() in x[2].lower(), abits_list))
     return result
 
