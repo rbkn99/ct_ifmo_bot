@@ -83,11 +83,12 @@ def new(bot, update):
     new_abits = pp.get_new_abits()
     if len(new_abits) == 0:
         update.message.reply_text(strings.no_abits)
+        return
     n = len(new_abits)
     reply_mes = "*На сегодня {0} новых заявок на поступление*\n".format(n)
     if n % 10 == 1 and n != 11:
         reply_mes = "*На сегодня {0} новая заявка на поступление*\n".format(n)
-    elif (n % 2 == 0 or n % 3 == 0) and n != 12 and n != 13:
+    elif (n % 10 == 2 or n % 10 == 3) and n != 12 and n != 13:
         reply_mes = "*На сегодня {0} новые заявки на поступление*\n".format(n)
     for i in range(len(new_abits)):
         reply_mes += format_abit_info(new_abits[i])
