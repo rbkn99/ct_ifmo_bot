@@ -6,7 +6,7 @@ import database as db
 
 
 def update():
-    print(777)
+    print(4)
     while True:
         time.sleep(3600)
         date = str(datetime.datetime.now()).split(' ')[0]
@@ -16,9 +16,9 @@ def update():
 
 
 def run():
-    print(228)
+    print(1)
     t = threading.Thread(target=update)
-    print(228228)
+    print(2)
     t.start()
-    print(228322)
+    print(3)
 
