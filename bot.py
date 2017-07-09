@@ -8,7 +8,6 @@ import config as cfg
 
 updater = Updater(token=cfg.TOKEN)
 dispatcher = updater.dispatcher
-print(5)
 time_updater.run()
 
 
