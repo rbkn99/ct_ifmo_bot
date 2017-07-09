@@ -7,13 +7,11 @@ import database as db
 
 def update():
     while True:
+        time.sleep(3600)
         date = str(datetime.datetime.now()).split(' ')[0]
-        print(date)
-        print(db.get_date())
         if date != db.get_date():
             db.set_date(date)
             db.update_abits(pp.get_abits_names())
-        time.sleep(3600)
 
 
 def run():

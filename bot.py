@@ -61,6 +61,7 @@ def format_abit_info(abit):
 def search(bot, update, args):
     if len(args) == 0:
         update.message.reply_text(strings.tip_mes)
+    print(args)
     abits = pp.get_abit(args)
     if len(abits) == 0:
         update.message.reply_text(strings.not_found_mes)
