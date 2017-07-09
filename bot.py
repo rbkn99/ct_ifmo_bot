@@ -10,7 +10,7 @@ updater = Updater(token=cfg.TOKEN)
 dispatcher = updater.dispatcher
 print(5)
 time_updater.run()
-print(6)
+
 
 def hello(bot, update):
     update.message.reply_text(strings.hello_mes)
@@ -92,10 +92,10 @@ dispatcher.add_handler(CommandHandler('new', new))
 dispatcher.add_handler(CommandHandler('search', search, pass_args=True))
 dispatcher.add_handler(CommandHandler('links', links))
 dispatcher.add_handler(CommandHandler('faq', send_faq))
-print(7)
+
 updater.start_webhook(listen="0.0.0.0",
                       port=int(os.environ.get('PORT', '5000')),
                       url_path=cfg.TOKEN)
 updater.bot.set_webhook(cfg.HOST + cfg.TOKEN)
 updater.idle()
-print(8)
+

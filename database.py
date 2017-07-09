@@ -1,10 +1,8 @@
 from pymongo import MongoClient
 import config as cfg
 
-print(9)
 client = MongoClient(cfg.MONGODB_URI)
 db = client[cfg.DATABASE]
-print(10)
 
 
 def get_db_abits():
