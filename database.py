@@ -15,10 +15,7 @@ def update_abits(new_abits):
 
 
 def get_date():
-    try:
-        return db.time.find({})[0]['date']
-    except IndexError:
-        return ""
+    return db.time.find({})[0]['date']
 
 
 def set_date(new_date):
