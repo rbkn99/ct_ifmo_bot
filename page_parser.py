@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import itertools
 import strings
+import database as db
 import config as cfg
 
 
@@ -26,19 +27,32 @@ def search_abit(name, abits_list):
     return result
 
 
-def get_abit(name):
+def get_all_abits():
     html = requests.get(cfg.ABIT_LIST_URL).text
     soup = BeautifulSoup(html, "lxml")
     raw_rows = soup.find_all('tr', {'class': ''})
     rows = []
     for row in raw_rows:
         rows.append([el.text for el in row.find_all('td')])
-
     # лишняя колонка: условие поступления
     rows = [row[1:] if len(row) == 16 else row for row in rows]
+    return rows
 
-    return search_abit(name, rows)
+
+def get_abits_names():
+    return [abit[2] for abit in get_all_abits()]
+
+
+def get_abit(name):
+    return search_abit(name, get_all_abits())
 
 
 def get_new_abits():
-    pass
+    abits = get_all_abits()
+    abits_names = get_abits_names()
+    db_abits_names = db.get_db_abits()
+    new_abits = []
+    for abit in abits_names:
+        if abit not in db_abits_names:
+            new_abits.append(search_abit(abit, abits)[0])
+    return new_abits

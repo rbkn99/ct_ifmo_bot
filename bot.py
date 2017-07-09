@@ -1,13 +1,14 @@
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
-from telegram.ext import MessageHandler, Filters
 import os
 import strings
+import time_updater
 import page_parser as pp
 import config as cfg
 
 updater = Updater(token=cfg.TOKEN)
 dispatcher = updater.dispatcher
+time_updater.run()
 
 
 def hello(bot, update):
@@ -36,6 +37,27 @@ def send_faq(bot, update):
     update.message.reply_text(strings.faq)
 
 
+def format_abit_info(abit):
+    tab4 = "\t\t\t\t"
+    abit = ['-' if el == '' else el for el in abit]
+    return "№ п/п: {0}\n" \
+           "Номер заявления: {1}\n" \
+           "ФИО: {2}\n" \
+           "Вступительные испытания\n" \
+           "%sВид: {3}\n" \
+           "%sМатематика: {4}\n" \
+           "%sРусский язык: {5}\n" \
+           "%sИнформатика: {6}\n" \
+           "%sЕГЭ + ИД: {7}\n" \
+           "%sЕГЭ: {8}\n" \
+           "%sИД: {9}\n" \
+           "Наличие оригинала документов: {10}\n" \
+           "Наличие согласия на зачисление: {11}\n" \
+           "Преимущественное право: {12}\n" \
+           "Олимпиада: {13}\n" \
+           "Статус: {14}\n\n".format(*abit) % (tab4, tab4, tab4, tab4, tab4, tab4, tab4)
+
+
 def search(bot, update, args):
     if len(args) == 0:
         update.message.reply_text(strings.tip_mes)
@@ -43,36 +65,29 @@ def search(bot, update, args):
     if len(abits) == 0:
         update.message.reply_text(strings.not_found_mes)
         return
-
-    tab4 = "\t\t\t\t"
     result_text = ""
     for abit in abits:
-        abit = ['-' if el == '' else el for el in abit]
-        result_text += "№ п/п: {0}\n" \
-                       "Номер заявления: {1}\n" \
-                       "ФИО: {2}\n" \
-                       "Вступительные испытания\n" \
-                       "%sВид: {3}\n" \
-                       "%sМатематика: {4}\n" \
-                       "%sРусский язык: {5}\n" \
-                       "%sИнформатика: {6}\n" \
-                       "%sЕГЭ + ИД: {7}\n" \
-                       "%sЕГЭ: {8}\n" \
-                       "%sИД: {9}\n" \
-                       "Наличие оригинала документов: {10}\n" \
-                       "Наличие согласия на зачисление: {11}\n" \
-                       "Преимущественное право: {12}\n" \
-                       "Олимпиада: {13}\n" \
-                       "Статус: {14}\n\n".format(*abit) % (tab4, tab4, tab4, tab4, tab4, tab4, tab4)
+        result_text += format_abit_info(abit)
     update.message.reply_text(result_text)
 
 
 def links(bot, update):
     update.message.reply_text(strings.links_mes)
 
+
+def new(bot, update):
+    new_abits = pp.get_new_abits()
+    if len(new_abits) == 0:
+        update.message.reply_text(strings.no_abits)
+    result_text = ""
+    for abit in new_abits:
+        result_text += format_abit_info(abit)
+    update.message.reply_text(result_text)
+
 dispatcher.add_handler(CommandHandler('start', hello))
 dispatcher.add_handler(CommandHandler('help', hello))
 dispatcher.add_handler(CommandHandler('stats', send_stats))
+dispatcher.add_handler(CommandHandler('new', new))
 dispatcher.add_handler(CommandHandler('search', search, pass_args=True))
 dispatcher.add_handler(CommandHandler('links', links))
 dispatcher.add_handler(CommandHandler('faq', send_faq))
