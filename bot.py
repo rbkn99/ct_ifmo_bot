@@ -88,7 +88,7 @@ def new(bot, update):
     reply_mes = "*На сегодня {0} новых заявок на поступление*\n".format(n)
     if n % 10 == 1 and n != 11:
         reply_mes = "*На сегодня {0} новая заявка на поступление*\n".format(n)
-    elif (n % 10 == 2 or n % 10 == 3) and n != 12 and n != 13:
+    elif (2 <= n % 10 <= 4) and n != 12 and n != 13 and n != 14:
         reply_mes = "*На сегодня {0} новые заявки на поступление*\n".format(n)
     for i in range(len(new_abits)):
         reply_mes += format_abit_info(new_abits[i])
