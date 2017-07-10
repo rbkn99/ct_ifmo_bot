@@ -28,7 +28,9 @@ links_mes = "Подробности о кафедре — http://codeforces.com/
             "Викиконспекты - http://neerc.ifmo.ru/wiki/index.php?title=%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%" \
             "D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0\n" \
             "МЕМЫ - https://vk.com/ktmemes\n" \
-            "Куча полезных конспектов по 1 курсу - https://drive.google.com/drive/folders/0B68xxdocwxnDMjRDNklhWktsa0U"
+            "Куча полезных конспектов по 1 курсу - " \
+            "https://drive.google.com/drive/folders/0B68xxdocwxnDMjRDNklhWktsa0U\n" \
+            "Учебные будни - https://vk.com/sleepingkt"
 
 faq = "*Если количество олимпиадников будет больше, чем количество бюджетных мест?*\n" \
       "Среди олимпиадников конкурс не проводится. Будут зачислены на бюджет все абитуриенты, " \
