@@ -85,11 +85,11 @@ def new(bot, update):
         update.message.reply_text(strings.no_abits)
         return
     n = len(new_abits)
-    reply_mes = "*На сегодня {0} новых заявок на поступление*\n".format(n)
+    reply_mes = "*На сегодня {0} новых заявок на поступление БВИ*\n".format(n)
     if n % 10 == 1 and n != 11:
-        reply_mes = "*На сегодня {0} новая заявка на поступление*\n".format(n)
+        reply_mes = "*На сегодня {0} новая заявка на поступление БВИ*\n".format(n)
     elif (2 <= n % 10 <= 4) and n != 12 and n != 13 and n != 14:
-        reply_mes = "*На сегодня {0} новые заявки на поступление*\n".format(n)
+        reply_mes = "*На сегодня {0} новые заявки на поступление БВИ*\n".format(n)
     for i in range(len(new_abits)):
         reply_mes += format_abit_info(new_abits[i])
         if i % 10 == 9:

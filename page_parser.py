@@ -54,5 +54,7 @@ def get_new_abits():
     new_abits = []
     for abit in abits_names:
         if abit not in db_abits_names:
-            new_abits.append(search_abit(abit.split(' '), abits)[0])
+            abit_info = search_abit(abit.split(' '), abits)[0]
+            if abit_info[3] == "":  # только БВИ
+                new_abits.append(abit_info)
     return new_abits
